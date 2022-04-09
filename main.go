@@ -6,13 +6,15 @@ import (
 	"os"
 	"strings"
 
+	b64 "encoding/base64"
 	ci "github.com/libp2p/go-libp2p-core/crypto"
 	peer "github.com/libp2p/go-libp2p-core/peer"
 )
 
 func main() {
 	size := flag.Int("bitsize", 2048, "select the bitsize of the key to generate")
-	typ := flag.String("type", "RSA", "select type of key to generate (RSA or Ed25519)")
+	typ := flag.String("type", "ed25519", "select type of key to generate (RSA or Ed25519)")
+	quant := flag.Int("quantity", 1, "select the number of keys to generate")
 
 	flag.Parse()
 
@@ -49,5 +51,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	os.Stdout.Write(data)
+	os.Stdout.Write(b64.StdEncoding.EncodeToString(data))
 }
